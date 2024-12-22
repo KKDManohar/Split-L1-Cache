@@ -1,6 +1,6 @@
 module SplitL1Cache ;
 	parameter Sets      		    = 2**14; 		// 16k sets
-	parameter AddrBits      	    = 32;	 		// 32 Address bits
+	parameter AddrBits      	    = 32;	 		
 	parameter DWays      	        = 8;	 		// 8-way Data Cache
 	parameter IWays  	            = 4;	 		// 4-way Instruction Cache
 	parameter BytesperCacheLines 	= 64;	 		// 64 byte Cache lines
