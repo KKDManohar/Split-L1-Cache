@@ -69,39 +69,39 @@ InstructionCache [Sets-1:0][IWays-1:0] L1InstructionCache;
 
 //  Read instructions from Trace File 
 
-// initial	begin
-	// Cache_Clear();
-        // Trace = $fopen("traceFile.txt" , "r");
-   	// if ($test$plusargs("USER_MODE")) 
-			// x=1;
-    	// else
-    		// x=0;
-	// while (!$feof(Trace))	
-	// begin
-        // TempDisplay = $fscanf(Trace, "%h %h\n",n,Address);
-        // {Tag,Index,Byte} = Address;
+initial	begin
+	Cache_Clear();
+        Trace = $fopen("traceFile.txt" , "r");
+   	if ($test$plusargs("USER_MODE")) 
+			x=1;
+    	else
+    		x=0;
+	while (!$feof(Trace))	
+	begin
+        TempDisplay = $fscanf(Trace, "%h %h\n",n,Address);
+        {Tag,Index,Byte} = Address;
     
-		// case (n) inside
-			// 4'd0:	Data_Read(Tag,Index,x);   		
-			// 4'd1:	DataWritetoL1DataCache (Tag,Index,x);
-			// 4'd2: 	InstructionReadFromL1InstructionCache (Tag,Index,x);
-			// 4'd3:	SendInvalidateCommandFromL2Cache(Tag,Index,x);   
-			// 4'd4:	DataRequestFromL2Cache (Tag,Index,x);
-			// 4'd8:	Cache_Clear();
-			// 4'd9:	DisplayCacheContentsMESIstates();
-		// endcase			
-	// end
-	// $fclose(Trace);
-	// DHitRatio = (real'(DHitCounter)/(real'(DHitCounter) + real'(DMissCounter))) * 100.00;
-	// IHitRatio 	= (real'(IHitCounter) /(real'(IHitCounter)  + real'(IMissCounter))) *100.00;
+		case (n) inside
+			4'd0:	Data_Read(Tag,Index,x);   		
+			4'd1:	DataWritetoL1DataCache (Tag,Index,x);
+			4'd2: 	InstructionReadFromL1InstructionCache (Tag,Index,x);
+			4'd3:	SendInvalidateCommandFromL2Cache(Tag,Index,x);   
+			4'd4:	DataRequestFromL2Cache (Tag,Index,x);
+			4'd8:	Cache_Clear();
+			4'd9:	DisplayCacheContentsMESIstates();
+		endcase			
+	end
+	$fclose(Trace);
+	DHitRatio = (real'(DHitCounter)/(real'(DHitCounter) + real'(DMissCounter))) * 100.00;
+	IHitRatio 	= (real'(IHitCounter) /(real'(IHitCounter)  + real'(IMissCounter))) *100.00;
 
-	// $display("---------Statistics for Data Cache-------------");
-	// $display("Data Cache Reads= %d\n Data Cache Writes= %d\n Data Cache Hits= %d \n Data Cache Misses= %d \n Data Cache Hit Ratio = %f\n", DReadCounter, DWriteCounter, DHitCounter, DMissCounter, DHitRatio);
+	$display("---------Statistics for Data Cache-------------");
+	$display("Data Cache Reads= %d\n Data Cache Writes= %d\n Data Cache Hits= %d \n Data Cache Misses= %d \n Data Cache Hit Ratio = %f\n", DReadCounter, DWriteCounter, DHitCounter, DMissCounter, DHitRatio);
 	
-	// $display("---------Instruction Cache Statistics----------");
-	// $display("Instruction Cache Reads = %d \nInstruction Cache Misses = %d \nInstruction Cache Hits = %d \nInstruction Cache Hit Ratio =  %f \n",IReadCounter, IMissCounter, IHitCounter, IHitRatio);
-	// $finish;													
-// end
+	$display("---------Instruction Cache Statistics----------");
+	$display("Instruction Cache Reads = %d \nInstruction Cache Misses = %d \nInstruction Cache Hits = %d \nInstruction Cache Hit Ratio =  %f \n",IReadCounter, IMissCounter, IHitCounter, IHitRatio);
+	$finish;													
+end
 
 //Updating LRU Bits
 
