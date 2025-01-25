@@ -105,7 +105,15 @@ end
 
 //Updating LRU Bits
 
-
+task automatic UpdateLRUBits_data(logic [IndexBits-1:0]iIndex, ref bit [DWayselectBits-1:0] Data_ways ); // Update LRU bits in DATA CACHE
+	logic [DWayselectBits-1:0]temp;
+	temp = L1DataCache[iIndex][Data_ways].LRUbits;
+	
+	for (int j = 0; j < DWays ; j++)
+		L1DataCache[iIndex][j].LRUbits = (L1DataCache[iIndex][j].LRUbits > temp) ? L1DataCache[iIndex][j].LRUbits - 1'b1 : L1DataCache[iIndex][j].LRUbits;
+			
+	L1DataCache[iIndex][Data_ways].LRUbits = '1;
+endtask 
 
 task automatic UpdateLRUBits_ins(logic [IndexBits-1:0]iIndex, ref bit [IWayselectBits-1:0] Instruction_ways ); // Update LRU bits in INSTRUCTION CACHE
 	logic [IWayselectBits-1:0]temp;
